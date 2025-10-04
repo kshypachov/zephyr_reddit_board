@@ -377,7 +377,7 @@ If everything worked, the LED will blink and a shell will be available on UART1 
 You’ve just created your own custom board definition in Zephyr! 🎉  
 Next up: adding W25Q128 flash, SPI, I2C and other peripherals.
 
-> You can find all the files for this board in this commit: [GitHub link , https://github.com/kshypachov/zephyr_reddit_board/edit/main/reddit_board/]
+> You can find all the files for this board in this commit: [GitHub link], https://github.com/kshypachov/zephyr_reddit_board/edit/main/reddit_board/
 
 📘 Official porting guide:  
 https://docs.zephyrproject.org/latest/hardware/porting/board_porting.html
