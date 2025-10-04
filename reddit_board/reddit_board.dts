@@ -1,0 +1,73 @@
+/*
+ * Copyright (c) 2020 Kalyan Sriram <coder.kalyan@gmail.com>
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+/dts-v1/; 													// Device Tree Source version 1 — required header for DTS files
+#include <st/f4/stm32f401Xe.dtsi>							// Include the SoC-specific base definitions for STM32F401xE
+#include <st/f4/stm32f401c(d-e)ux-pinctrl.dtsi>				// Include pin control definitions for STM32F401C(D/E)Ux series
+#include <zephyr/dt-bindings/input/input-event-codes.h>		// Include input event key codes (e.g., KEY_0)
+
+/ {
+	model = "Reddir v1 Board";								// Human-readable model name of the board
+	compatible = "st,reddit_board";							// Compatible string used for matching in drivers or overlays
+
+	chosen {
+		zephyr,console = &usart1;							// Set USART1 as the system console (e.g., printk/log output)
+		zephyr,shell-uart = &usart1;						// Use USART1 for shell interface (if enabled)
+		zephyr,sram = &sram0;								// Define main SRAM region
+		zephyr,flash = &flash0;								// Define main flash region
+	};
+
+	leds {
+		compatible = "gpio-leds";							// Node for GPIO-controlled LEDs
+		user_led: led {										// Define a label for the user LED
+			gpios = <&gpioc 13 GPIO_ACTIVE_LOW>;			// LED is on GPIOC pin 13, active low
+			label = "User LED";								// Human-readable label for the LED
+		};
+	};
+
+	gpio_keys {
+		compatible = "gpio-keys";							// Node for GPIO button inputs (key events)
+		user_button: button {								// Define a label for the user button
+			label = "KEY";									// Human-readable label
+			gpios = <&gpioa 0 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;	// Button on GPIOA pin 0, active low with pull-up
+			zephyr,code = <INPUT_KEY_0>;					// Logical input code, like KEY_0
+		};
+	};
+
+	aliases {
+		led0 = &user_led;									// Alias 'led0' used by Zephyr subsystems (e.g., samples)
+		sw0 = &user_button;									// Alias 'sw0' used for button handling (e.g., in samples or input drivers)
+	};
+};
+
+&usart1 {
+	pinctrl-0 = <&usart1_tx_pa9 &usart1_rx_pa10>;			// Define the TX/RX pins for USART1: TX = PA9, RX = PA10
+	pinctrl-names = "default";								// Define pinctrl configuration name (required)
+	status = "okay";										// Enable this peripheral in the build
+	current-speed = <115200>;								// Set UART baudrate to 115200
+};
+
+&clk_hse {
+	clock-frequency = <DT_FREQ_M(25)>;  					// Use external crystal with 25 MHz frequency
+	status = "okay";										// Enable HSE (High-Speed External) oscillator
+};
+
+&pll {
+	div-m = <25>;											// PLL input divider
+	mul-n = <200>;											// PLL multiplier
+	div-p = <2>;											// PLL output divider for main system clock
+	div-q = <7>;											// PLL output divider for main system clock
+	clocks = <&clk_hse>;									// PLL source ( in this exaple - use external oscillator (HSE))
+	status = "okay";										// Enable PLL
+};
+
+&rcc {
+	clocks = <&pll>;										// Use PLL as system clock source
+	clock-frequency = <DT_FREQ_M(100)>;						// Final core system clock frequency after applying PLL: 100 MHz
+	ahb-prescaler = <1>;									// Division on AHB bus
+	apb1-prescaler = <2>;									// Divide APB1 clock by 2 (max 50 MHz for STM32F4)
+	apb2-prescaler = <1>;									// Division on APB2
+};
