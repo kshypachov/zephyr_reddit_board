@@ -1,7 +1,7 @@
 # Zephyr ELI5: From a Newbie to Newbies — Part 1: Creating a Custom Board
 
 Hey folks! 👋  
-This is the first post in a series called **"Zephyr ELI5: From a Newbie to Newbies"**, where I — someone who's learning Zephyr just like you — share my experience. We'll go step-by-step through the process of describing a custom board in Zephyr: creating `.dts`, `Kconfig`, `board.yaml`, and everything needed to make your board work with Zephyr.
+This is the first post in a series called **"Zephyr ELI5: From a Newbie to Newbies"**, where I — someone who's learning Zephyr just like you — share my experience. We'll go step-by-step through the process of describing a custom board in Zephyr: creating `.dts`, `Kconfig`, `board.yml`, and everything needed to make your board work with Zephyr.
 
 We'll be using a WeAct board with the **STM32F401CEU6** chip. I'm working on **macOS** with **Zephyr v4.2.0**.
 
@@ -12,7 +12,7 @@ We'll be using a WeAct board with the **STM32F401CEU6** chip. I'm working on **m
 ## 💡 Planned Series
 
 - **Part 2** — Connecting the W5500 Ethernet chip  
-- **Part 1** — Creating a board definition: `dts`, `Kconfig`, `board.yaml`
+- **Part 1** — Creating a board definition: `dts`, `Kconfig`, `board.yml`
 - **(Maybe later)** Part 0 — Installing Zephyr SDK and configuring CLion IDE
 
 > If this post is helpful, I’ll publish the next articles!
@@ -72,7 +72,7 @@ config BOARD_REDDIT_BOARD
 
 ---
 
-## 🧾 Step 2: `board.yaml` File
+## 🧾 Step 2: `board.yml` File
 
 ```bash
 touch ~/zephyrproject/zephyr/boards/arm/reddit_board/board.yml
