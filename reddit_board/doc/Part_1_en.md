@@ -78,6 +78,7 @@ config BOARD_REDDIT_BOARD
 
 > You get the `SOC_STM32F401XE` name from `soc/st/stm32/stm32f4x/Kconfig.soc`  
 > This is not the full chip name — it's a generic name for STM32F401CE, STM32F401VE, STM32F401RE, etc.
+> We use the Kconfig symbol SOC_STM32F401XE which enables support for this SoC family in Zephyr.
 
 > File naming format is: `Kconfig.BOARD_NAME`, so here it is `Kconfig.reddit_board`.
 
@@ -193,6 +194,63 @@ Contents:
 For more information about Devicetree syntax and structure, see the official guide:  
 📘 https://docs.zephyrproject.org/latest/build/dts/intro.html#devicetree-intro
 
+---
+## 🧬 How DTS Inheritance Works (DeviceTree Chaining)
+
+When you include a file like this in your `reddit_board.dts`:
+
+```dts
+#include <st/f4/stm32f401xe.dtsi>
+```
+
+You're not just including that one file — you're actually starting a **chain of includes** that bring in progressively more specific hardware definitions for your SoC.
+
+The inheritance chain looks like this:
+
+```
+skeleton.dtsi
+  └── armv7-m.dtsi
+        └── stm32f4.dtsi
+              └── stm32f401.dtsi
+                    └── stm32f401xe.dtsi   ← this is what we include
+```
+
+These files are located in:
+
+```
+zephyr/dts/arm/st/f4/
+```
+
+Each file in the chain adds another layer of detail:
+
+| File               | Purpose                                                |
+|--------------------|--------------------------------------------------------|
+| `skeleton.dtsi`    | Minimal base definitions for any device tree           |
+| `armv7-m.dtsi`     | Common ARM Cortex-M nodes (CPU, NVIC, SysTick, etc.)   |
+| `stm32f4.dtsi`     | Shared nodes for all STM32F4 series chips              |
+| `stm32f401.dtsi`   | Definitions specific to the STM32F401 family           |
+| `stm32f401xe.dtsi` | Peripheral addresses, IRQs, clocks for STM32F401xE     |
+
+---
+
+### 💡 Why is this important?
+
+Because it means we **don’t need to redefine everything from scratch**.  
+By including `stm32f401xe.dtsi`, we inherit everything from all parent files: CPU info, interrupt controller, basic memory layout, default clock trees, etc.
+
+This lets us focus only on what’s **specific to our board** — like:
+
+- LED and button GPIOs
+- Pin mappings
+- External peripherals (e.g. SPI flash, sensors)
+- Clock source and PLL configuration
+
+You can think of it like a class hierarchy or layered configuration.
+
+---
+
+📘 Official Zephyr Devicetree Guide:  
+https://docs.zephyrproject.org/latest/build/dts/intro.html#devicetree-intro
 ---
 
 ## 🧩 Step 4: `reddit_board_defconfig` File
