@@ -19,6 +19,17 @@ We'll be using a WeAct board with the **STM32F401CEU6** chip. I'm working on **m
 
 ---
 
+
+## 📚 Useful Official Resources
+
+- 🧭 **Board Porting Guide**  
+  https://docs.zephyrproject.org/latest/hardware/porting/board_porting.html
+
+- 🌳 **DeviceTree Intro Guide**  
+  https://docs.zephyrproject.org/latest/build/dts/intro.html#devicetree-intro
+
+---
+
 ## 🧰 What You’ll Need
 
 - **STM32CubeMX** or **STM32CubeIDE** — super helpful for clock configuration.
@@ -179,6 +190,9 @@ Contents:
 
 > Filename format: `BOARD_NAME.dts` — so here it’s `reddit_board.dts`
 
+For more information about Devicetree syntax and structure, see the official guide:  
+📘 https://docs.zephyrproject.org/latest/build/dts/intro.html#devicetree-intro
+
 ---
 
 ## 🧩 Step 4: `reddit_board_defconfig` File
@@ -270,6 +284,10 @@ If everything worked, the LED will blink and a shell will be available on UART1 
 You’ve just created your own custom board definition in Zephyr! 🎉  
 Next up: adding W25Q128 flash, SPI, I2C and other peripherals.
 
-> You can find all the files for this board in this commit: [GitHub link]
+> You can find all the files for this board in this commit: [GitHub link , https://github.com/kshypachov/zephyr_reddit_board/edit/main/reddit_board/]
+
+📘 Official porting guide:  
+https://docs.zephyrproject.org/latest/hardware/porting/board_porting.html
+
 
 Leave a comment if you want the next part of the series sooner 😄
