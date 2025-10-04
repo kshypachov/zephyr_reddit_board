@@ -11,6 +11,7 @@ We'll be using a WeAct board with the **STM32F401CEU6** chip. I'm working on **m
 
 ## 💡 Planned Series
 
+- **Part 3 and beyond** — Depending on interest, feedback, and usefulness, the number of posts is not fixed.
 - **Part 2** — Connecting the W5500 Ethernet chip  
 - **Part 1** — Creating a board definition: `dts`, `Kconfig`, `board.yml`
 - **(Maybe later)** Part 0 — Installing Zephyr SDK and configuring CLion IDE
@@ -22,15 +23,15 @@ We'll be using a WeAct board with the **STM32F401CEU6** chip. I'm working on **m
 
 ## 📚 Useful Official Resources
 
-- 🧭 **Board Porting Guide**  
+- **Board Porting Guide**  
   https://docs.zephyrproject.org/latest/hardware/porting/board_porting.html
 
-- 🌳 **DeviceTree Intro Guide**  
+- **DeviceTree Intro Guide**  
   https://docs.zephyrproject.org/latest/build/dts/intro.html#devicetree-intro
 
 ---
 
-## 🧰 What You’ll Need
+## What You’ll Need
 
 - **STM32CubeMX** or **STM32CubeIDE** — super helpful for clock configuration.
 - **Zephyr SDK installed** (in my case, at `~/zephyrproject`)
@@ -49,7 +50,7 @@ In my case, Zephyr is installed here:
 
 ---
 
-## 📍 Where to Create Your Board
+## Where to Create Your Board
 
 Inside `zephyr/boards/arm`, create a new folder for your board:
 
@@ -63,7 +64,7 @@ cd reddit_board
 
 ---
 
-## 🧩 Step 1: `Kconfig.reddit_board` File
+## Step 1: `Kconfig.reddit_board` File
 
 ```bash
 touch ~/zephyrproject/zephyr/boards/arm/reddit_board/Kconfig.reddit_board
@@ -84,7 +85,7 @@ config BOARD_REDDIT_BOARD
 
 ---
 
-## 🧾 Step 2: `board.yml` File
+## Step 2: `board.yml` File
 
 ```bash
 touch ~/zephyrproject/zephyr/boards/arm/reddit_board/board.yml
@@ -107,7 +108,7 @@ board:
 
 ---
 
-## 🌲 Step 3: `reddit_board.dts` File
+##  Step 3: `reddit_board.dts` File
 
 ```bash
 touch ~/zephyrproject/zephyr/boards/arm/reddit_board/reddit_board.dts
@@ -192,10 +193,10 @@ Contents:
 > Filename format: `BOARD_NAME.dts` — so here it’s `reddit_board.dts`
 
 For more information about Devicetree syntax and structure, see the official guide:  
-📘 https://docs.zephyrproject.org/latest/build/dts/intro.html#devicetree-intro
+https://docs.zephyrproject.org/latest/build/dts/intro.html#devicetree-intro
 
 ---
-## 🧬 How DTS Inheritance Works (DeviceTree Chaining)
+## How DTS Inheritance Works (DeviceTree Chaining)
 
 When you include a file like this in your `reddit_board.dts`:
 
@@ -249,11 +250,11 @@ You can think of it like a class hierarchy or layered configuration.
 
 ---
 
-📘 Official Zephyr Devicetree Guide:  
+Official Zephyr Devicetree Guide:  
 https://docs.zephyrproject.org/latest/build/dts/intro.html#devicetree-intro
 ---
 
-## 🧩 Step 4: `reddit_board_defconfig` File
+## Step 4: `reddit_board_defconfig` File
 
 ```bash
 touch ~/zephyrproject/zephyr/boards/arm/reddit_board/reddit_board_defconfig
