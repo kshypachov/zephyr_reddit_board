@@ -50,9 +50,35 @@ In my case, Zephyr is installed here:
 
 ---
 
-## Where to Create Your Board
+## Where Board Descriptions Live — and Where to Put Yours
 
-Inside `zephyr/boards/arm`, create a new folder for your board:
+Let’s figure out where to place the files for your custom board inside the Zephyr project.
+
+Start by navigating to the main directory where all board definitions live:
+
+```bash
+cd ~/zephyrproject/zephyr/boards/
+```
+
+Inside this folder, you’ll find subfolders — each one represents a **vendor** or **architecture group**. For example:
+
+```bash
+ls ~/zephyrproject/zephyr/boards/
+```
+
+You may see folders like:
+
+```
+arm/
+intel/
+nordic/
+raspberrypi/
+...
+```
+
+Since we’re using an **ARM-based STM32 chip**, we’ll use the `arm/` folder as our starting point.
+
+Navigate into the `arm` directory and create a folder for your custom board:
 
 ```bash
 cd ~/zephyrproject/zephyr/boards/arm
@@ -60,8 +86,16 @@ mkdir reddit_board
 cd reddit_board
 ```
 
-> We'll use the same name for our board and folder: `reddit_board`
+> ⚠️ **Important Note:** Placing your board directly inside `zephyr/boards/arm` is **not the best practice** for long-term or production use.  
+> This mixes your custom files with Zephyr's official files, which can cause issues during upgrades or collaboration.
+>
+> ✅ However, for **learning**, **quick prototyping**, and **experiments**, this is perfectly fine — and will keep things simple for now.
 
+Now that we're inside `boards/arm/reddit_board/`, we’re ready to start creating the files:
+- `Kconfig.reddit_board`
+- `board.yml`
+- `reddit_board.dts`
+- and later, `reddit_board_defconfig`
 ---
 
 ## Step 1: `Kconfig.reddit_board` File
