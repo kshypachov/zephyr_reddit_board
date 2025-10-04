@@ -115,7 +115,7 @@ config BOARD_REDDIT_BOARD
 > This is not the full chip name — it's a generic name for STM32F401CE, STM32F401VE, STM32F401RE, etc.
 > We use the Kconfig symbol SOC_STM32F401XE which enables support for this SoC family in Zephyr.
 
-> File naming format is: `Kconfig.BOARD_NAME`, so here it is `Kconfig.reddit_board`.
+> The file should be named as Kconfig.<board_name>, so here it’s Kconfig.reddit_board.
 
 ---
 
@@ -157,7 +157,7 @@ Contents:
 #include <zephyr/dt-bindings/input/input-event-codes.h>		// Include input event key codes (e.g., KEY_0)
 
 / {
-	model = "Reddir v1 Board";								// Human-readable model name of the board
+	model = "Reddit v1 Board";								// Human-readable model name of the board
 	compatible = "st,reddit_board";							// Compatible string used for matching in drivers or overlays
 
 	chosen {
