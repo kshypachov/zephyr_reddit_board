@@ -3,6 +3,39 @@
 Hey folks! 👋  
 This is the first post in a series called **"Zephyr ELI5: From a Newbie to Newbies"**, where I — someone who's learning Zephyr just like you — share my experience. We'll go step-by-step through the process of describing a custom board in Zephyr: creating `.dts`, `Kconfig`, `board.yml`, and everything needed to make your board work with Zephyr.
 
+
+---
+
+## 🤔 First question: Why do we even need this?
+
+This article is dedicated to the very first step you’ll face when writing firmware for a board **that is not a standard dev kit** — a board with its own pinout, peripherals, or even SoC.
+
+If you’ve worked with **FreeRTOS** or bare-metal C before, you’ve probably manually configured:
+- GPIOs as inputs or outputs,
+- SPI/I2C interfaces (speed, phase, mode),
+- or maybe even clock trees and PLLs.
+
+In **Zephyr**, things work differently.  
+Peripheral configuration is done using **DTS (Devicetree Source) files** — a powerful abstraction layer that lets you separate hardware description from application code.
+
+Let’s take a simple example: `blinky`.  
+You can compile it for both `nucleo_f103rb` and `stm32f769i_disco`, and the LED will blink — even though the user LED is on different pins:
+
+| Board              | User LED Pin     |
+|--------------------|------------------|
+| `nucleo_f103rb`    | `GPIOA_5`        |
+| `stm32f769i_disco` | `GPIOJ_13`       |
+
+The application code doesn’t change.  
+That’s the power of **board-level hardware abstraction via DTS**.
+
+But what if you're designing your **own custom board**?  
+It likely has a different pinout, different peripherals, and maybe even a different microcontroller.  
+That means you’ll need to define a **custom board configuration** — and that’s exactly what this guide is about.
+
+---
+
+
 We'll be using a WeAct board with the **STM32F401CEU6** chip. I'm working on **macOS** with **Zephyr v4.2.0**.
 
 > ⚠️ I don’t claim to be 100% correct or fully compliant with official best practices. If you're a Zephyr expert — I'd love your feedback in the comments!
